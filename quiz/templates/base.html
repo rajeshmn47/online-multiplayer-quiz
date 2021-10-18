@@ -1,0 +1,54 @@
+<html>
+<head>
+<style>
+.navb{
+    background :black;
+    height:35px;
+    text-align:right;
+    font-size:25px;
+    margin-y:10px;
+}
+td{
+    margin:40px;
+}
+.raji{
+    margin-left:30px;
+}
+
+.container{
+    display:flex;
+}
+.result{
+    margin-left:400px;
+}
+a{
+    color:blue;
+}
+.foote{
+    background:black;
+    text-align:center;
+}
+p{
+    color:white;
+}
+
+</style>
+</head>
+<body>
+<div class="navb">
+{% if user.is_authenticated %}
+ <a href='/logout'>logout</a>
+ <a href='/add'>add</a>
+{% else %}
+<a href='/register'>register</a>
+ <a href='/login'>login</a>
+{% endif%}
+
+</div>
+{% block content%}
+{% endblock %}
+<div class="foote">
+<p>@copyright</p>
+</div>
+</body>
+</html>

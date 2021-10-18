@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="container ">
+ 
+<div class="raji">
+<div><h1>Welcome to Quiz</h1></div>
+  <div id="displaytimer"><b>Timer: 0 seconds</b></div>
+<form method='post' action=''>
+    {% csrf_token %}
+    {% for q  in w%}
+    <div class="form-group">
+      <label for="question">{{q.question_text}}</label>
+    </div>
+    <div class="form-check">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios1" value="option1" checked>
+            <label class="form-check-label" for="gridRadios1">
+                {{q.option1}}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios2" value="option2">
+            <label class="form-check-label" for="gridRadios2">
+                {{q.option2}}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios1" value="option3">
+            <label class="form-check-label" for="gridRadios1">
+                {{q.option3}}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="{{q.question_text}}" id="gridRadios2" value="option4">
+            <label class="form-check-label" for="gridRadios2">
+                {{q.option4}}
+            </label>
+        </div>
+        <br>
+    </div>    
+    {% endfor %}
+    <input id='timer' type='hidden' name="timer" value="">
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  </div>
+  <div class="pagination">
+<span class="step-links">
+<div>
+{% if w.has_previous %}
+  <a href="?page=1">&laquo; first</a>
+  <a href="?page={{ w.previous_page_number }}">previous</a>
+{% endif %}
+<span class="current">
+Page {{ w.number }} of {{ w.paginator.num_pages }}.
+</span>
+{% if w.has_next %}
+    <a href="?page={{ w.next_page_number }}">next</a>
+    <a href="?page={{ w.paginator.num_pages }}">last &raquo;</a>
+{% endif %}
+</div>
+</span>
+</div>
+<div class="result">
+<h1>results</h1>
+<table>
+<tr>
+<th>highscore</th>
+<th>name</th>
+<th>score</th>
+</tr>
+{% for t in l%}
+<tr>
+<td>{{forloop.counter}}</td>
+<td>{{t.user.username}}</td>
+<td>{{t.scores}}</td>
+</tr>
+{% endfor%}
+</table>
+</div>
+</div>
+
+    {% block script %}
+        <script>
+ 
+            console.log('hello world')
+            const timer=document.getElementById('displaytimer')
+            console.log(timer.textContent)
+            const inputtag = document.getElementById('timer')
+ 
+            t=0
+            setInterval(()=>{
+                t+=1
+                timer.innerHTML ="<b>Timer: " +t+" seconds</b>"
+                inputtag.value = t
+            },1000)
+        </script>
+    {% endblock script %}
+ 
+{% endblock %}
